@@ -13,6 +13,7 @@ export class UserDto {
   email: string;
 
   @IsString()
+  @IsOptional()
   @Min(6, {
     message: 'Пароль должен содержать не менее 6 символов',
   })

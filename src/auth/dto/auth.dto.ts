@@ -1,4 +1,11 @@
-import { IsEmail, IsNumber, IsString, Min, MinLength } from 'class-validator';
+import {
+  IsEmail,
+  IsNumber,
+  IsOptional,
+  IsString,
+  Min,
+  MinLength,
+} from 'class-validator';
 
 export class AuthDto {
   @IsEmail()
@@ -11,15 +18,19 @@ export class AuthDto {
   password: string;
 
   @IsString()
+  @IsOptional()
   name: string;
 
   @IsString()
+  @IsOptional()
   surname: string;
 
   @IsString()
+  @IsOptional()
   gender: 'MALE' | 'FEMALE';
 
   @IsNumber()
   @Min(14)
+  @IsOptional()
   age: number;
 }

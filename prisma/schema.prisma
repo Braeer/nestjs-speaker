@@ -24,7 +24,7 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   subscription Subscription?
-  avatarUrl String
+  avatarUrl String?
   completedTests completedTests[]
 
   @@map("users")
@@ -34,20 +34,32 @@ model User {
 model Tests {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   name String
-  answer String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   description String
-  correctAnswer String
+  questionsCount Int?
+  correctAnswersCount Int?
+  questions questions[]
+
 
   @@map("tests")
+}
+
+model questions {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  answer String
+  description String
+  correctAnswer String
+
+  tests Tests @relation(fields: [testsId], references: [id])
+  testsId String @db.ObjectId
+
+  @@map("questions")
 }
 
 model completedTests {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   name String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
   result Int
 
   user User @relation(fields: [userId], references: [id])
@@ -55,6 +67,21 @@ model completedTests {
 
   @@map("completedTests")
 
+}
+
+model Book {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  description String
+  imageUrl String
+
+}
+
+model Video {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  description String
+  videoUrl String
 }
 
 
